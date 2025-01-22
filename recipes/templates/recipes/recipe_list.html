@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Search Results</h2>
+{% if results %}
+    <ul>
+    {% for recipe in results %}
+        <li>{{ recipe.title }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+{% endblock %}
+
+<!-- Corrected for loop for rating stars -->
+<div class="card-body">
+    <h5 class="card-title">{{ recipe.title }}</h5>
+    <p class="card-text">
+        <strong>Ingredients:</strong> {{ recipe.ingredients }}
+    </p>
+    <p class="card-text">
+        <strong>Instructions:</strong> {{ recipe.instructions|truncatechars:100 }}
+    </p>
+    <div>
+        <strong>Rating:</strong>
+        {% with 5 as max_stars %}
+            {% for i in max_stars|make_list %}
+                {% if i|add:1 <= recipe.rating %}
+                    <span class="text-warning">&#9733;</span>
+                {% else %}
+                    <span class="text-muted">&#9734;</span>
+                {% endif %}
+            {% endfor %}
+        {% endwith %}
+    </div>
+</div>

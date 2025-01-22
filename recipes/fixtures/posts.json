@@ -1,0 +1,108 @@
+[
+    {
+        "model": "recipes.recipe", 
+        "pk": 1, 
+        "fields": { 
+            "title": "Chocolate Cake", 
+            "ingredients": "Flour, Sugar, Cocoa Powder, Baking Powder, Eggs, Milk, Butter", 
+            "instructions": "1. Preheat the oven to 350°F (175°C). 2. In a large bowl, mix the dry ingredients. 3. Add the wet ingredients and mix until smooth. 4. Pour the batter into a greased baking pan. 5. Bake for 30-35 minutes or until a toothpick inserted into the center comes out clean. 6. Let the cake cool before serving.", 
+            "cooking_time": 45, 
+            "user": 1, 
+            "created_on": "2025-01-22T11:10:45Z", 
+            "categories": [1] 
+        } 
+    }, 
+    { 
+        "model": "recipes.recipe", 
+        "pk": 2, 
+        "fields": { 
+            "title": "Vegetarian Pasta", 
+            "ingredients": "Pasta, Olive Oil, Garlic, Tomatoes, Spinach, Parmesan Cheese", 
+            "instructions": "1. Cook the pasta according to package instructions. 2. In a large pan, heat the olive oil and sauté the garlic. 3. Add the tomatoes and cook until soft. 4. Add the spinach and cook until wilted. 5. Toss the cooked pasta with the sauce. 6. Serve with grated Parmesan cheese.", 
+            "cooking_time": 30, 
+            "user": 1, 
+            "created_on": "2025-01-22T11:10:45Z", 
+            "categories": [2]
+        }
+    },
+    { 
+        "model": "recipes.recipe", 
+        "pk": 3, 
+        "fields": { 
+            "title": "Spaghetti Carbonara", 
+            "ingredients": "Spaghetti, Eggs, Parmesan Cheese, Pancetta, Black Pepper", 
+            "instructions": "1. Cook the spaghetti according to package instructions. 2. In a bowl, whisk together eggs and grated Parmesan cheese. 3. In a pan, cook the pancetta until crispy. 4. Toss the cooked spaghetti with the pancetta and remove from heat. 5. Quickly mix in the egg and cheese mixture. 6. Serve with extra Parmesan and black pepper.", 
+            "cooking_time": 25, 
+            "user": 1, 
+            "created_on": "2025-01-22T11:10:45Z", 
+            "categories": [2] 
+         } 
+    },
+    { 
+        "model": "recipes.recipe", 
+        "pk": 4, 
+        "fields": { 
+            "title": "Chicken Curry", 
+            "ingredients": "Chicken, Onion, Garlic, Ginger, Tomatoes, Coconut Milk, Curry Powder", 
+            "instructions": "1. Sauté the onion, garlic, and ginger until fragrant. 2. Add the chicken and cook until browned. 3. Stir in the curry powder and cook for another minute. 4. Add the tomatoes and coconut milk, and simmer until the chicken is cooked through. 5. Serve with rice.", 
+            "cooking_time": 40, 
+            "user": 1, 
+            "created_on": "2025-01-22T11:10:45Z", 
+            "categories": [1] 
+        } 
+    },
+    {
+        "model": "recipes.recipe",
+        "pk": 5,
+        "fields": {
+            "title": "Beef Stroganoff",
+            "ingredients": "Beef, Onion, Mushrooms, Sour Cream, Beef Broth, Flour, Butter",
+            "instructions": "1. Cook the beef in a pan until browned. 2. Remove the beef and sauté the onion and mushrooms in the same pan. 3. Stir in the flour and cook for a minute. 4. Add the beef broth and bring to a simmer. 5. Return the beef to the pan and stir in the sour cream. 6. Serve over egg noodles.",
+            "cooking_time": 35,
+            "user": 1,
+            "created_on": "2025-01-22T11:10:45Z",
+            "categories": [1]
+        }
+    },
+    {
+        "model": "recipes.recipe",
+        "pk": 6,
+        "fields": {
+            "title": "Vegetable Stir-Fry",
+            "ingredients": "Broccoli, Bell Peppers, Carrots, Soy Sauce, Garlic, Ginger, Sesame Oil",
+            "instructions": "1. Heat the sesame oil in a pan. 2. Add the garlic and ginger and sauté until fragrant. 3. Add the vegetables and stir-fry until tender-crisp. 4. Stir in the soy sauce and cook for another minute. 5. Serve with rice or noodles.",
+            "cooking_time": 20,
+            "user": 1,
+            "created_on": "2025-01-22T11:10:45Z",
+            "categories": [2]
+        }
+    },
+    {
+        "model": "recipes.recipe",
+        "pk": 7,
+        "fields": {
+            "title": "Lemon Drizzle Cake",
+            "ingredients": "Flour, Sugar, Butter, Eggs, Lemon Zest, Lemon Juice, Baking Powder",
+            "instructions": "1. Preheat the oven to 350°F (175°C). 2. Cream together the butter and sugar. 3. Beat in the eggs one at a time. 4. Stir in the lemon zest and juice. 5. Fold in the flour and baking powder. 6. Pour the batter into a greased baking pan and bake for 30-35 minutes. 7. Let the cake cool before drizzling with a lemon glaze.",
+            "cooking_time": 45,
+            "user": 1,
+            "created_on": "2025-01-22T11:10:45Z",
+            "categories": [1]
+        }
+    },
+    {
+        "model": "recipes.recipe",
+        "pk": 8,
+        "fields": {
+            "title": "Greek Salad",
+            "ingredients": "Cucumber, Tomatoes, Red Onion, Feta Cheese, Olives, Olive Oil, Lemon Juice, Oregano",
+            "instructions": "1. Chop the cucumber, tomatoes, and red onion. 2. Combine the vegetables in a bowl. 3. Add the feta cheese and olives. 4. Drizzle with olive oil and lemon juice. 5. Sprinkle with oregano and toss to combine.",
+            "cooking_time": 15,
+            "user": 1,
+            "created_on": "2025-01-22T11:10:45Z",
+            "categories": [2]
+        }
+    }
+]
+    
+        

@@ -13,8 +13,12 @@ class Recipe(models.Model):
     ingredients = models.TextField()
     instructions = models.TextField()
     cooking_time = models.IntegerField(help_text="Time in minutes")
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_on"]
 
     def __str__(self):
         return self.title

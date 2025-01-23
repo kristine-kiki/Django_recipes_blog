@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
-from django.views import generic
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, DetailView
 from .models import Category, Recipe
 from .forms import RecipeForm
 
 
 # Create your views here.
-class RecipeList(generic.ListView):
+class RecipeList(ListView):
     model = Recipe
     template_name = "recipes/recipe_list.html"
     context_object_name = 'recipes'
@@ -30,7 +30,7 @@ def add_recipe(request):
         form = RecipeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('recipe_list')
+            return redirect('home')
     else:
         form = RecipeForm()
     
@@ -41,6 +41,11 @@ def add_recipe(request):
             'form': form
         }
     )
+
+class RecipeDetail(DetailView):
+    model = Recipe
+    template_name = "recipes/recipe_detail.html"
+    context_object_name = 'recipe'
 
 def search(request):
     query = request.GET.get('query')
@@ -54,3 +59,13 @@ def search(request):
         }
     )
 
+def recipe_detail(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    
+    return render(
+        request,
+        'recipes/recipe_detail.html',
+        {
+            'recipe': recipe
+        }
+    )

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ recipe.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>{{ recipe.title }}</h2>
+        <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
+        <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+        <p><strong>Cooking Time:</strong> {{ recipe.cooking_time }} minutes</p>
+        <p><strong>Categories:</strong> {{ recipe.categories.all|join:", " }}</p>
+        <p><strong>Author:</strong> {{ recipe.user }}</p>
+    </div>
+
+    <script>
+        function openRecipeInPopup(url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    const newWindow = window.open('', 'Recipe', 'width=800,height=600');
+                    newWindow.document.write(html);
+                    newWindow.document.close();
+                })
+                .catch(error => console.error('Error fetching recipe details:', error));
+            return false;
+        }
+    </script>
+    
+</body>
+</html>
+
+
+<!-- Modal 
+        <div class="modal fade" id="recipeModal{{ recipe.id }}" tabindex="-1"
+            aria-labelledby="recipeModalLabel{{ recipe.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="recipeModalLabel{{ recipe.id }}">{{ recipe.title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
+                        <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+                        <p><strong>Cooking Time:</strong> {{ recipe.cooking_time }} minutes</p>
+                        <p><strong>Categories:</strong> {{ recipe.categories.all|join:", " }}</p>
+                        <p><strong>Author:</strong> {{ recipe.user }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->

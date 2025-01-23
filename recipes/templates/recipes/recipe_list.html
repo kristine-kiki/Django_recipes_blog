@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ recipe.title }}</h5>
                     <p class="card-text">{{ recipe.ingredients|truncatechars:100 }}</p>
-                    <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-primary" onclick="openRecipeInPopup('{% url 'recipe_detail' recipe.id %}')">View Recipe</a>
+                    <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-primary" onclick="return openRecipeInPopup('{% url 'recipe_detail' recipe.id %}')">View Recipe</a>
                 </div>
             </div>
         </div>
@@ -58,9 +58,9 @@
         </ul>
     </nav>
     {% endif %}
-    {% else %}
+{% else %}
     <p>No recipes found.</p>
-    {% endif %}
+{% endif %}
 </div>
 {% endblock %}
 

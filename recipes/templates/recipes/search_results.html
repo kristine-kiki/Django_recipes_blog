@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Search Recipes</h2>
+    <form method="GET" action="{% url 'search' %}" class="d-flex search-form">
+        <div class="input-group">
+            <input class="form-control" type="search" placeholder="Search for recipes or ingredients" aria-label="search" name="query" value="{{ query }}">
+            <button class="btn btn-outline-success" type="submit">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+    </form>
+
+    {% if results %}
+    <div class="mt-4">
+        <h3>Search Results</h3>
+        <ul class="list-group">
+            {% for recipe in results %}
+            <li class="list-group-item">
+                <a href="{% url 'recipe_detail' recipe.id %}" onclick="return openRecipeInPopup('{% url 'recipe_detail' recipe.id %}')">{{ recipe.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <div class="mt-4">
+        <p class="text-muted">No results found.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+<script>
+    function openRecipeInPopup(url) {
+        window.open(url, 'Recipe', 'width=800,height=600');
+        return false;
+    }
+</script>

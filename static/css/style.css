@@ -155,6 +155,27 @@ body {
 .approval {
     color: rgb(222, 146, 168);
 }
+/*Search bar*/
+.search-form .input-group {
+    width: 100%;
+}
+.search-form .form-control {
+    border-radius: 0;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+.search-form .btn {
+    border-radius: 0;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+.list-group-item {
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+.list-group-item:last-child {
+    border-bottom: none;
+}
 
 /* Form Styles */ 
 .container { 

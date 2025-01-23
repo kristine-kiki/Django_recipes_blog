@@ -43,12 +43,12 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == recipe_list_url %}active{% endif %}" aria-current="page"
-                            href="{% url 'recipe_list' %}">All Recipes</a>
+                        <a class="nav-link {% if request.path == recipe_list_url %}active{% endif %}"
+                            aria-current="page" href="{% url 'recipe_list' %}">All Recipes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == add_recipes_url %}active{% endif %}" aria-current="page"
-                            href="{% url 'add_recipe' %}">Add Recipes</a>
+                        <a class="nav-link {% if request.path == add_recipes_url %}active{% endif %}"
+                            aria-current="page" href="{% url 'add_recipe' %}">Add Recipes</a>
                     </li>
 
                     {% if user.is_authenticated %}
@@ -95,24 +95,35 @@
         <p class="text-end m-3">You are not logged in</p>
         {% endif %}
 
-        <form method="GET" action="{% url 'search' %}" class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="recipe or ingredients" aria-label="search"
-                name="query">
-            <button class="btn btn-outline-success" type="submit">Search </button>
-
+        <div class="container mt-4">
+            <h2>Search Recipes</h2>
+            <form method="GET" action="{% url 'search' %}" class="d-flex search-form">
+                <div class="input-group">
+                    <input class="form-control" type="search" placeholder="Search for recipes or ingredients" aria-label="search" name="query" value="{{ query }}">
+                    <button class="btn btn-outline-success" type="submit">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        
             {% if results %}
-            <ul>
-                {% for recipe in results %}
-                <li>{{ recipe.title }}</li>
-                {% endfor %}
-            </ul>
+            <div class="mt-4">
+                <h3>Search Results</h3>
+                <ul class="list-group">
+                    {% for recipe in results %}
+                    <li class="list-group-item">
+                        <a href="{% url 'recipe_detail' recipe.id %}" onclick="return openRecipeInPopup('{% url 'recipe_detail' recipe.id %}')">{{ recipe.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
             {% else %}
-            <p>No results found.</p>
+            <div class="mt-4">
+                <p class="text-muted">No results found.</p>
+            </div>
             {% endif %}
-        </form>
+        </div>
 
-        {% block note %}
-        <!-- Content Goes here -->
         <div class="container mt-4">
             <h2 class="mb-4">Recipes</h2>
             <div class="row">
@@ -122,23 +133,21 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ recipe.title }}</h5>
                             <p class="card-text">{{ recipe.ingredients|truncatechars:100 }}</p>
-                            <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-primary" onclick="openRecipeInPopup('{% url 'recipe_detail' recipe.id %}')">View Recipe</a>
-
+                            <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-primary"
+                                onclick="openRecipeInPopup('{% url 'recipe_detail' recipe.id %}')">View Recipe</a>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
-        {% endblock note %}
     </main>
 
     <!-- Footer -->
     <footer class="footer mt-auto py-3 dark-bg">
         <p class="m-0 text-center text-white">
-            {% block copyright %}
             Made by cooking enthusiasts
-            {% endblock copyright %}</p>
+        </p>
         <p class="m-0 text-center text-white">Follow us: <i class="fab fa-facebook-square ms-3"></i>
             <i class="fab fa-twitter-square ms-3"></i>
             <i class="fab fa-instagram-square ms-3"></i>
@@ -146,19 +155,37 @@
         </p>
     </footer>
 
+    <!-- Modal -->
+    <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recipeModalLabel">Recipe Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="recipeModalContent">
+                    <!-- Recipe details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
     </script>
     <script>
         function openRecipeInPopup(url) {
-            window.open(url, 'Recipe', 'width=800,height=600');
+            const modal = new bootstrap.Modal(document.getElementById('recipeModal'));
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('recipeModalContent').innerHTML = html;
+                    modal.show();
+                })
+                .catch(error => console.error('Error loading recipe:', error));
             return false;
         }
     </script>
-    
-
-    {% block extras %}
-    {% endblock %}
 </body>
 
 </html>

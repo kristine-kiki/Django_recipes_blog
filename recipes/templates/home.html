@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Search Recipes</h2>
+    <form method="GET" action="{% url 'search' %}" class="d-flex search-form">
+        <div class="input-group">
+            <input class="form-control" type="search" placeholder="Search for recipes or ingredients" aria-label="search" name="query" value="{{ query }}">
+            <button class="btn btn-outline-success" type="submit">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+    </form>
+
+    {% if results %}
+    <div class="mt-4">
+        <h3>Search Results</h3>
+        <ul class="list-group">
+            {% for recipe in results %}
+            <li class="list-group-item">
+                <a href="{% url 'recipe_detail' recipe.id %}" onclick="return openRecipeInPopup('{% url 'recipe_detail' recipe.id %}')">{{ recipe.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <div class="mt-4">
+        <p class="text-muted">No results found.</p>
+    </div>
+    {% endif %}
+</div>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Latest Recipes</h2>
+    <div class="row">
+        {% for recipe in recipes %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p class="card-text">{{ recipe.ingredients|truncatechars:100 }}</p>
+                    <p class="card-text"><strong>Average Rating:</strong> {{ recipe.average_rating|floatformat:1|default:"No ratings yet" }}</p>
+                    <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-primary">View Recipe</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+<!-- Modal -->
+<div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recipeModalLabel">Recipe Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="recipeModalContent">
+                <!-- Recipe details will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+</script>
+<script>
+    function openRecipeInPopup(url) {
+        const modal = new bootstrap.Modal(document.getElementById('recipeModal'));
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('recipeModalContent').innerHTML = html;
+                modal.show();
+            })
+            .catch(error => console.error('Error loading recipe:', error));
+        return false;
+    }
+</script>
+

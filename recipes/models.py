@@ -19,15 +19,13 @@ class Recipe(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     
     def average_rating(self) -> float:
-        return Rating.objects.filter(recipe=self).aggregate(Avg("rating"))["rating__avg"] or 0
-
-    def __str__(self):
-        return f"{self.title}: {self.average_rating()}" 
-    class Meta:
-        ordering = ["-created_on"]
+        return Rating.objects.filter(recipe=self).aggregate(Avg("rating"))["rating__avg"] or 0 
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ["-created_on"]
 
 class Rating(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ratings')
@@ -36,3 +34,12 @@ class Rating(models.Model):
 
     def __str__(self):
         return f"{self.recipe.title}: {self.rating}"
+
+class Comment(models.Model):
+    recipe = models.ForeignKey(Recipe, related_name="comments", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.user} on {self.recipe}"

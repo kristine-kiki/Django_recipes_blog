@@ -1,6 +1,7 @@
 from django import forms
 from .models import Recipe
 from .models import Rating
+from .models import Comment
 
 class RecipeForm(forms.ModelForm):
     class Meta:
@@ -14,3 +15,8 @@ class RatingForm(forms.ModelForm):
         widgets = {
             'rating': forms.RadioSelect(choices=[(i, i) for i in range(1, 6)])
         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']

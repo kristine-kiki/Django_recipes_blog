@@ -20,19 +20,6 @@
         {% endfor %}
     </div>
 
-    <div class="container mt-4">
-        <h2 class="mb-4">Add Recipe</h2> 
-        {% if user.is_authenticated %} 
-        <form method="POST" class="needs-validation" novalidate> 
-            {% csrf_token %} 
-            {{ form|crispy }} 
-            <button type="submit" class="btn btn-primary">Add Recipe</button> 
-        </form> 
-        {% else %} 
-        <p>Log in to add a recipe</p> 
-        {% endif %}
-    </div>
-
     {% if is_paginated %}
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
@@ -58,9 +45,22 @@
         </ul>
     </nav>
     {% endif %}
-{% else %}
+    {% else %}
     <p>No recipes found.</p>
-{% endif %}
+    {% endif %}
+</div>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Add Recipe</h2> 
+    {% if user.is_authenticated %} 
+    <form method="POST" class="needs-validation" novalidate> 
+        {% csrf_token %} 
+        {{ form|crispy }} 
+        <button type="submit" class="btn btn-primary">Add Recipe</button> 
+    </form> 
+    {% else %} 
+    <p>Log in to add a recipe</p> 
+    {% endif %}
 </div>
 {% endblock %}
 

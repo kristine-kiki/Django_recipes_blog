@@ -15,13 +15,13 @@ import math
 # Create your views here.
 
 def home(request):
-    recipes = Recipe.objects.all().order_by('-created_on')[:6]
+    recipes = Recipe.objects.filter(status='approved').order_by('-created_on')[:6]
     for recipe in recipes:
         recipe.average_rating = recipe.ratings.aggregate(Avg('rating'))['rating__avg']
     return render(
         request, 'home.html', 
         {
-            'recipes': recipes
+            'recipes': recipes,
         }
     )
 
@@ -31,17 +31,17 @@ class RecipeList(ListView):
     context_object_name = 'recipes'
     paginate_by = 6
 
-def recipe_list(request):
-    recipes = Recipe.objects.all()
-    paginator = Paginator(recipes,6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+def recipe_list(request):    
+    recipes = Recipe.objects.filter(status='approved')  # Only fetch approved recipes
+    paginator = Paginator(recipes, 6)  # Paginate by 6 recipes per page
+    page_number = request.GET.get('page')  # Get the current page number
+    page_obj = paginator.get_page(page_number)  # Paginate the query
 
     return render(
         request,
         "recipes/recipe_list.html",
         {
-            "page_obj": page_obj
+            "page_obj": page_obj,  # Pass the paginated recipes to the template
         }
     )
 
@@ -51,9 +51,10 @@ def add_recipe(request):
         form = RecipeForm(request.POST)
         if form.is_valid():
             recipe = form.save(commit= False)
-            recipe_user = request.user
+            recipe.user = request.user
+            recipe.status = 'pending'
             recipe.save()
-            messages.add_message(request, messages.SUCCESS, 'Recipe added!')
+            messages.add_message(request, messages.SUCCESS, 'Recipe submitted for approval!')
             return redirect('recipe_list')
     else:
         form = RecipeForm()
@@ -114,6 +115,18 @@ def delete_recipe(request, id):
 
     # Redirect to the list of recipes or wherever appropriate
     return redirect('recipe_list')
+
+@login_required
+def my_recipes(request):
+    user_recipes = Recipe.objects.filter(user=request.user)
+    print(user_recipes)
+    return render(
+        request,
+        'recipes/my_recipes.html',
+        {
+            'recipes': user_recipes,
+        }
+    )
 
 class RecipeDetail(DetailView):
     model = Recipe
@@ -186,47 +199,3 @@ def recipe_detail(request, recipe_id):
         },
     )
 
-'''
-@login_required
-def add_rating(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
-    if request.method == 'POST':
-        if 'rating' in request.POST:
-            form = RatingForm(request.POST)
-            if form.is_valid():
-                rating = form.save(commit=False)
-                rating.recipe = recipe
-                rating.user = request.user
-                rating.save()
-                messages.add_message(request, messages.SUCCESS, 'Rating posted!')
-        else:
-            messages.add_message(request, messages.ERROR, 'Error posting rating!')
-        return HttpResponseRedirect(reverse('recipe_detail', args=[recipe_id]))
-
-@login_required
-def add_comment(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
-    if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.recipe = recipe
-            comment.user = request.user
-            comment.save()
-            messages.add_message(request, messages.SUCCESS, 'Comment posted!')
-        else:
-            messages.add_message(request, messages.ERROR, 'Error posting comment!')
-        return HttpResponseRedirect(reverse('recipe_detail', args=[recipe_id]))
-
-    comment_form = CommentForm()
-    return render(
-        request, 
-        'recipes/recipe_detail.html', 
-        {
-            'recipe': recipe,
-            'comment_form': comment_form,
-            'average_rating': recipe.average_rating()
-        }
-    )
-
-'''

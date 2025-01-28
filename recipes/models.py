@@ -18,6 +18,9 @@ class Recipe(models.Model):
     categories = models.ManyToManyField(Category)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(choices=[('pending','Pending'),('approved','Approved'),('rejected','Rejected')],
+        default='pending')
+
     
     def average_rating(self) -> float:
         return Rating.objects.filter(recipe=self).aggregate(Avg("rating"))["rating__avg"] or 0 

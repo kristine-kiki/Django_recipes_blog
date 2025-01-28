@@ -58,6 +58,10 @@
 
                     {% if user.is_authenticated %}
                     <li class="nav-item">
+                        <a class="nav-link {% if request.path == my_recipes_url %}active{% endif %}"
+                            aria-current="page" href="{% url 'my_recipes' %}">My Recipes</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
                             href="{% url 'account_logout' %}">Logout</a>
                     </li>
@@ -130,7 +134,6 @@
 
     <script>
     $( document ).ready(function() {
-        console.log( "document loaded" );
 
         // Show the rating success alert after form submission
         function showRatingSuccessAlert() {

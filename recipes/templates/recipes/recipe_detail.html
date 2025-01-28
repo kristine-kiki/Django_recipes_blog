@@ -8,8 +8,8 @@
 
     {% if recipe.user == request.user %}
         <div class="mb-3">
-            <a href="{% url 'recipe_edit' recipe.id %}" class="btn btn-primary">Edit Recipe</a>
-            <form method="POST" action="{% url 'delete_recipe' recipe.id %}" id="delete-recipe">
+            <a href="{% url 'recipe_edit' recipe.id %}" class="btn btn-primary">Edit Recipe</a> 
+            <form method="POST" action="{% url 'delete_recipe' recipe.id %}" id="delete-recipe" class="d-inline">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Delete Recipe</button>
             </form>

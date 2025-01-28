@@ -1,89 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ recipe.title }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container mt-4">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="recipeModalLabel{{ recipe.id }}">{{ recipe.title }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
-                    <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
-                    <p><strong>Cooking Time:</strong> {{ recipe.cooking_time }} minutes</p>
-                    <p><strong>Categories:</strong> {{ recipe.categories.all|join:", " }}</p>
-                    <p><strong>Author:</strong> {{ recipe.user }}</p>
-                    <p><strong>Average Rating:</strong> {{ average_rating|default:"No ratings yet" }}</p>
-                    <p><strong>Rate This Recipe:</strong></p>
-                    <form method="POST" onsubmit="return validateRating()">
-                        {% csrf_token %}
-                        <div class="rating-buttons">
-                            {% for i in rating_range %}
-                                <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}"
-                                    {% if recipe.user_rating == i %}checked{% endif %}
-                                    aria-label="{{ i }} star{{ i|pluralize }}" />
-                                <label for="star{{ i }}">{{ i }}</label>
-                            {% endfor %}
-                        </div>
-                        <div id="rating-error" class="text-danger mt-2" style="display: none;">
-                            Please select a rating before submitting.
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-2">Submit Your Rating</button>
-                    </form>
-                    <hr>
-                    <h5>Comments</h5>
-                    <ul class="list-group">
-                        {% for comment in recipe.comments.all %}
-                        <li class="list-group-item">
-                            <strong>{{ comment.user }}</strong> - {{ comment.created_at|date:"F j, Y, g:i a" }}
-                            <p>{{ comment.text }}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <hr>
-                    <h5>Add a Comment</h5>
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{ comment_form.as_p }}
-                        <button type="submit" class="btn btn-primary" name="comment">Submit Comment</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                </div>
-            </div>
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <a href="{% url 'recipe_list' %}" class="btn btn-secondary mb-3">Back to All Recipes</a>
+
+    {% if recipe.user == request.user %}
+        <div class="mb-3">
+            <a href="{% url 'recipe_edit' recipe.id %}" class="btn btn-primary">Edit Recipe</a>
+            <form method="POST" action="{% url 'delete_recipe' recipe.id %}" id="delete-recipe">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete Recipe</button>
+            </form>
         </div>
+    {% endif %}
+
+    <h1>{{ recipe.title }}</h1>
+    <p>{{ recipe.description }}</p>
+    <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
+    <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+    <p><strong>Cooking Time:</strong> {{ recipe.cooking_time }} minutes</p>
+    <p><strong>Categories:</strong> {{ recipe.categories.all|join:", " }}</p>
+    <p><strong>Author:</strong> {{ recipe.user.username }}</p>
+    <p><strong>Average Rating:</strong> {{ recipe.average_rating|floatformat:1|default:"No ratings yet" }} &#9733;</p>
+
+    {% if user.is_authenticated %}
+    <h5 class="mt-4">Rate This Recipe</h5>
+    <form method="POST" action="{% url 'recipe_detail' recipe.id %}">
+        {% csrf_token %}
+        <div class="rating-buttons">
+            {% for i in rating_range %}
+            <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}"
+                {% if user_rating and user_rating.rating == i %}checked{% endif %}>
+            <label for="star{{ i }}">{{ i }} &#9733;</label>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary mt-2" name="rating_submit">Submit Rating</button>
+    </form>
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="rating-success-alert"
+        style="display:none;">
+        Rating submitted successfully!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <script>
-        // Validate if a rating is selected before submission
-        function validateRating() {
-            const ratings = document.getElementsByName('rating');
-            let isSelected = false;
 
-            for (const rating of ratings) {
-                if (rating.checked) {
-                    isSelected = true;
-                    break;
-                }
-            }
+    <hr>
+    {% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to rate this recipe.</p>
+    {% endif %}
 
-            if (!isSelected) {
-                document.getElementById('rating-error').style.display = 'block';
-                return false;
-            }
+    <h5>Add a Comment</h5>
+    <form method="POST" action="{% url 'recipe_detail' recipe.id %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit" class="btn btn-primary" name="comment_submit">Submit Comment</button>
+    </form>
 
-            document.getElementById('rating-error').style.display = 'none';
-            return true;
-        }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ELTpoYy5n3zV9zzTtmI3U5p74p3y0iQm6Q" crossorigin="anonymous"></script>
-</body>
-</html>
+    <hr>
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="comment-success-alert"
+        style="display:none;">
+        Comment submitted successfully!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <h5>Comments</h5>
+    <ul class="list-group">
+        {% for comment in comments %}
+        <li class="list-group-item">
+            <strong>{{ comment.user.username }}</strong> - {{ comment.created_at|date:"F j, Y, g:i a" }}
+            <p>{{ comment.text }}</p>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No comments yet. Be the first to comment!</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

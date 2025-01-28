@@ -20,7 +20,7 @@
         <ul class="list-group">
             {% for recipe in results %}
             <li class="list-group-item">
-                <a href="{% url 'recipe_detail' recipe.id %}" onclick="return openRecipeInPopup('{% url 'recipe_detail' recipe.id %}')">{{ recipe.title }}</a>
+                <a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.title }}</a>
             </li>
             {% endfor %}
         </ul>

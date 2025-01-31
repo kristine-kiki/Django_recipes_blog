@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 from django.db.models import Avg
 
@@ -17,9 +18,12 @@ class Recipe(models.Model):
     cooking_time = models.IntegerField(help_text="Time in minutes")
     categories = models.ManyToManyField(Category)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    featured_image = CloudinaryField('image', default='placeholder')
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=[('pending','Pending'),('approved','Approved'),('rejected','Rejected')],
         default='pending')
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='edit')
+
 
     
     def average_rating(self) -> float:
@@ -44,6 +48,8 @@ class Comment(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='comments')
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')],
+        default='pending')
 
     def __str__(self):
         return f"Comment by {self.user} on {self.recipe}"

@@ -1,3 +1,5 @@
+import math
+
 from django.urls import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -5,12 +7,11 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.views.generic import ListView, DetailView
+
 from .models import Category, Recipe, Rating
 from .forms import RecipeForm, RatingForm, CommentForm
-import math
-
 
 # Create your views here.
 
@@ -31,8 +32,9 @@ class RecipeList(ListView):
     context_object_name = 'recipes'
     paginate_by = 6
 
-def recipe_list(request):    
-    recipes = Recipe.objects.filter(status='approved')  # Only fetch approved recipes
+def recipe_list(request):
+    # Fetch approved recipes and original recipes awaiting editing approval
+    recipes = Recipe.objects.filter(status='approved')
     paginator = Paginator(recipes, 6)  # Paginate by 6 recipes per page
     page_number = request.GET.get('page')  # Get the current page number
     page_obj = paginator.get_page(page_number)  # Paginate the query
@@ -41,7 +43,7 @@ def recipe_list(request):
         request,
         "recipes/recipe_list.html",
         {
-            "page_obj": page_obj,  # Pass the paginated recipes to the template
+            "page_obj": page_obj, # Pass the paginated recipes to the template  
         }
     )
 
@@ -50,7 +52,7 @@ def add_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
         if form.is_valid():
-            recipe = form.save(commit= False)
+            recipe = form.save(commit=False)
             recipe.user = request.user
             recipe.status = 'pending'
             recipe.save()
@@ -70,24 +72,17 @@ def add_recipe(request):
 @login_required
 def recipe_edit(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-
-    # Ensure form is always defined
-    form = RecipeForm(instance=recipe)
-
     if request.method == 'POST':
-        recipe_form = RecipeForm(data=request.POST, instance=recipe)
-        
-        if recipe.user != request.user:
-            messages.add_message(request, messages.ERROR, 'You do not have permission to edit this recipe!')
-            return redirect('recipe_detail', recipe_id=recipe_id)
-
-        if recipe_form.is_valid():
-            recipe_form.save()
-            messages.add_message(request, messages.SUCCESS, 'Recipe updated successfully!')
-            return redirect('recipe_detail', recipe_id=recipe.id)
-        else:
-            # If form is invalid, redefine it to show errors
-            form = recipe_form
+        form = RecipeForm(request.POST, instance=recipe)
+        if form.is_valid():
+            recipe_edited = form.save(commit=False)
+            recipe_edited.status = 'pending'
+            recipe_edited.parent = recipe  # Link the edited version to the original recipe
+            recipe_edited.save()
+            messages.add_message(request, messages.SUCCESS, 'Edition submitted for approval')
+            return redirect('my_recipes')
+    else:
+        form = RecipeForm(instance=recipe)
 
     return render(
         request,
@@ -118,13 +113,12 @@ def delete_recipe(request, id):
 
 @login_required
 def my_recipes(request):
-    user_recipes = Recipe.objects.filter(user=request.user)
-    print(user_recipes)
+    recipes = Recipe.objects.filter(user=request.user)
     return render(
         request,
         'recipes/my_recipes.html',
         {
-            'recipes': user_recipes,
+            'recipes': recipes,
         }
     )
 
@@ -148,8 +142,8 @@ def search(request):
     )
 
 def recipe_detail(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
-    comments = recipe.comments.all()
+    recipe = get_object_or_404(Recipe, id=recipe_id, status__in=['approved', 'pending'])
+    comments = recipe.comments.filter(status="approved")
     ratings = recipe.ratings.all()
     user_rating = ratings.filter(user=request.user).first() if request.user.is_authenticated else None
 
@@ -182,7 +176,7 @@ def recipe_detail(request, recipe_id):
                 comment.user = request.user
                 comment.recipe = recipe
                 comment.save()
-                messages.success(request, "Your comment has been added!")
+                messages.success(request, "Your comment waiting for approval!")
                 return redirect("recipe_detail", recipe_id=recipe_id)
 
     return render(
@@ -198,4 +192,3 @@ def recipe_detail(request, recipe_id):
             "rating_range": rating_range,
         },
     )
-

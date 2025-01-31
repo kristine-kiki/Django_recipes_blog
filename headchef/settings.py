@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -50,7 +51,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_summernote',
+    'cloudinary',
     'recipes',
+    'contact',
 ]
 
 SITE_ID = 1
@@ -110,7 +113,8 @@ WSGI_APPLICATION = 'headchef.wsgi.application'
 #
 
 DATABASES = {
-    'default':dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL")),
+    
 }
 
 

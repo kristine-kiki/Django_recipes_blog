@@ -50,12 +50,13 @@
     <p><a href="{% url 'login' %}">Log in</a> to rate this recipe.</p>
     {% endif %}
 
+    {% if user.is_authenticated %}
     <h5>Add a Comment</h5>
-    <form method="POST" action="{% url 'recipe_detail' recipe.id %}">
+    <form method="POST" action="{% url 'recipe_detail' recipe.id %}" onsubmit="showApprovalMessage()">
         {% csrf_token %}
         {{ comment_form.as_p }}
         <button type="submit" class="btn btn-primary" name="comment_submit">Submit Comment</button>
-    </form>
+    </form> 
 
     <hr>
 
@@ -64,6 +65,9 @@
         Comment submitted successfully!
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    {% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to comment on this recipe.</p>
+    {% endif %}
 
     <h5>Comments</h5>
     <ul class="list-group">
@@ -77,5 +81,35 @@
         {% endfor %}
     </ul>
 </div>
+
+<!-- Popup window for approval message -->
+<div class="modal fade" id="approvalModal" tabindex="-1" aria-labelledby="approvalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="approvalModalLabel">Comment Submitted</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your comment has been submitted and will be visible after approval.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+</script>
+
+<script>
+    function showApprovalMessage() {
+        var approvalModal = new bootstrap.Modal(document.getElementById('approvalModal'));
+        approvalModal.show();
+    }
+</script>
 
 {% endblock %}

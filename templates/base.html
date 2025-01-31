@@ -55,6 +55,10 @@
                         <a class="nav-link {% if request.path == add_recipes_url %}active{% endif %}"
                             aria-current="page" href="{% url 'add_recipe' %}">Add Recipes</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == contact_url %}active{% endif %}"
+                            aria-current="page" href="{% url 'contact' %}">Contact</a>
+                    </li>
 
                     {% if user.is_authenticated %}
                     <li class="nav-item">

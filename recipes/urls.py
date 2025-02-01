@@ -1,6 +1,8 @@
 from . import views
 from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.home, name='home'),  # Home page
@@ -12,4 +14,4 @@ urlpatterns = [
     path('my_recipes/', views.my_recipes, name='my_recipes'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('search/', views.search, name='search'),  # Search page
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

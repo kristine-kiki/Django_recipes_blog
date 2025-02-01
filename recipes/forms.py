@@ -6,7 +6,7 @@ from .models import Comment
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        fields = ['title', 'ingredients', 'instructions', 'cooking_time', 'categories', 'user']
+        fields = ['title', 'ingredients', 'instructions', 'cooking_time', 'categories', 'user', 'image', 'status']
 
 class RatingForm(forms.ModelForm):
     class Meta:

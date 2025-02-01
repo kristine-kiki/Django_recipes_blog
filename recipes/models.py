@@ -18,7 +18,7 @@ class Recipe(models.Model):
     cooking_time = models.IntegerField(help_text="Time in minutes")
     categories = models.ManyToManyField(Category)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    featured_image = CloudinaryField('image', default='placeholder')
+    image = CloudinaryField('image')
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=[('pending','Pending'),('approved','Approved'),('rejected','Rejected')],
         default='pending')

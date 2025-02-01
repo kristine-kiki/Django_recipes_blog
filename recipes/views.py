@@ -35,9 +35,12 @@ class RecipeList(ListView):
 def recipe_list(request):
     # Fetch approved recipes and original recipes awaiting editing approval
     recipes = Recipe.objects.filter(status='approved')
+    for recipe in recipes:
+        print(recipe.image.url)
     paginator = Paginator(recipes, 6)  # Paginate by 6 recipes per page
     page_number = request.GET.get('page')  # Get the current page number
     page_obj = paginator.get_page(page_number)  # Paginate the query
+    
 
     return render(
         request,
@@ -50,7 +53,7 @@ def recipe_list(request):
 @login_required
 def add_recipe(request):
     if request.method == 'POST':
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             recipe = form.save(commit=False)
             recipe.user = request.user

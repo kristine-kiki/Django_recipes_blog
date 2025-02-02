@@ -1,5 +1,5 @@
 from django import forms
-from .models import ContactRequest
+from .models import Contact
 
 
 class ContactForm(forms.ModelForm):
@@ -10,5 +10,5 @@ class ContactForm(forms.ModelForm):
         """
         Specify the django model and order of the fields
         """
-        model = ContactRequest
-        fields = ('contact',)
+        model = Contact
+        fields = ('name', 'email', 'message')

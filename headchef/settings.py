@@ -57,10 +57,6 @@ cloudinary.config(
     api_secret=os.getenv("CLOUDINARY_API_SECRET"),
 )
 
-print("Cloudinary Cloud Name", os.getenv("CLOUDINARY_CLOUD_NAME"))
-print("Cloudinary API key", os.getenv("CLOUDINARY_API_KEY"))
-print("Cloudinary API Secret", os.getenv("CLOUDINARY_API_SECRET"))
-
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 LOGIN_REDIRECT_URL = '/'

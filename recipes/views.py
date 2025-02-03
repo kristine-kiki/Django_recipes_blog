@@ -3,7 +3,8 @@ import math
 from django.urls import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import login, authenticate, views as auth_views
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
@@ -196,3 +197,27 @@ def recipe_detail(request, recipe_id):
             "rating_range": rating_range,
         },
     )
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')  # Redirect to home page after successful login
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'registration/login.html', {'form': form})
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # After the user is created, you can redirect them to the login page or the home page
+            return redirect('account_login')  # Redirect to the login page
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'registration/signup.html', {'form': form})

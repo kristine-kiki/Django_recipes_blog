@@ -77,7 +77,7 @@ def add_recipe(request):
 def recipe_edit(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if request.method == 'POST':
-        form = RecipeForm(request.POST, instance=recipe)
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
         if form.is_valid():
             recipe_edited = form.save(commit=False)
             recipe_edited.status = 'pending'
@@ -147,7 +147,7 @@ def search(request):
 
 def recipe_detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id, status__in=['approved', 'pending'])
-    comments = Comment.objects.filter(recipe=recipe, approved=True)  # Show only approved comments
+    comments = Comment.objects.filter(recipe=recipe, status='approved')  # Show only approved comments
     ratings = recipe.ratings.all()
     user_rating = ratings.filter(user=request.user).first() if request.user.is_authenticated else None
 

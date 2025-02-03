@@ -18,7 +18,7 @@ class Recipe(models.Model):
     cooking_time = models.IntegerField(help_text="Time in minutes")
     categories = models.ManyToManyField(Category)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = CloudinaryField('image')
+    image = CloudinaryField('image', null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=[('pending','Pending'),('approved','Approved'),('rejected','Rejected')],
         default='pending')
@@ -48,8 +48,11 @@ class Comment(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='comments')
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')],
-        default='pending')
+    status = models.CharField(
+        choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')],
+        default='pending',
+        max_length=10
+    )
 
     def __str__(self):
         return f"Comment by {self.user} on {self.recipe}"

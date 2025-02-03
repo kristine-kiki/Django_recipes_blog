@@ -1,9 +1,9 @@
 
 .brand {
-    font-family: Lato, sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: 1.4rem;
     font-weight: 700;
-    color: #4A4A4F;
+    color: #618c76;
 }
 
 .light-bg {
@@ -11,7 +11,7 @@
 }
 
 .dark-bg {
-    background-color: #445261;
+    background-color: #618c76;
 }
 
 .main-bg {
@@ -56,7 +56,7 @@
 }
 
 .masthead-text {
-    background-color: #445261;
+    background-color: #618c76;
     color: white;
     position: relative;
 }
@@ -73,21 +73,16 @@
     right: 90%;
     height: 100%;
     width: 150%;
-    background: #445261;
+    background: #618c76;
     -webkit-transform: skew(15deg);
     -moz-transform: skew(15deg);
     transform: skew(15deg);
     z-index: 100;
 }
 
-.profile-image {
-    width: 50%;
-}
-
-
 .post-link {
     text-decoration: none;
-    color: #445261;
+    color: #618c76;
 }
 
 .post-link:hover,
@@ -124,7 +119,7 @@
 
 .link:hover,
 .link:active {
-    color: #445261;
+    color: #618c76;
     text-decoration: underline;
 }
 

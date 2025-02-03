@@ -6,7 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.home, name='home'),  # Home page
-    path('add/', views.add_recipe, name='add_recipe'),  # Add recipe
+    path('add_recipe/', views.add_recipe, name='add_recipe'),  # Add recipe,
     path('recipe/<int:recipe_id>/edit', views.recipe_edit, name='recipe_edit'),  # Edit a recipe
     path('recipe/<int:recipe_id>/', views.recipe_detail, name='recipe_detail'),  # Recipe details
     path('recipes/', views.recipe_list, name='recipe_list'),  # Recipe list using CBV
@@ -14,5 +14,6 @@ urlpatterns = [
     path('my_recipes/', views.my_recipes, name='my_recipes'),
     path('login/', views.login_view, name='account_login'),
     path('signup/', views.signup_view, name='account_signup'),
+    path('logout/', views.logout_view, name='logout'),
     path('search/', views.search, name='search'),  # Search page
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

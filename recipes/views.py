@@ -3,7 +3,7 @@ import math
 from django.urls import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.contrib.auth import login, authenticate, views as auth_views
+from django.contrib.auth import login, logout, authenticate, views as auth_views
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -52,7 +52,7 @@ def recipe_list(request):
         }
     )
 
-@login_required
+@login_required(login_url='account_login')
 def add_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST, request.FILES)
@@ -221,3 +221,10 @@ def signup_view(request):
         form = UserCreationForm()
 
     return render(request, 'registration/signup.html', {'form': form})
+
+def logout_view(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect('home')  # Redirect to the homepage after logout
+    return render(request, 'registration/logout.html')
+

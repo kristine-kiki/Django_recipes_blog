@@ -1,19 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import ContactForm
+from .forms import ContactMessageForm
+from .models import ContactForm
+
 
 def contact_view(request):
     """
     Handles contact form submissions and displays success message.
     """
-
     if request.method == "POST":
-        form = ContactForm(request.POST)
+        form = ContactMessageForm(data=request.POST)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS, "Your message has been sent successfully!")
-            form = ContactForm()
-    else:
-        form = ContactForm()
-    
-    return render(request, 'contact/contact.html', {'contact_form': form})
+            return redirect('contact')
+    else:        
+        form = ContactMessageForm()
+
+    return render(request, 'contact/contact.html', {'contact_form': form })
+
+

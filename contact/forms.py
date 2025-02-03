@@ -1,14 +1,7 @@
+from .models import ContactForm
 from django import forms
-from .models import Contact
 
-
-class ContactForm(forms.ModelForm):
-    """
-    Form class for users to request a collaboration
-    """
+class ContactMessageForm(forms.ModelForm):
     class Meta:
-        """
-        Specify the django model and order of the fields
-        """
-        model = Contact
+        model = ContactForm
         fields = ('name', 'email', 'message')

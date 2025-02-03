@@ -7,7 +7,8 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Avg, Q
+from django.db.models import Avg
+from .models import Comment
 from django.views.generic import ListView, DetailView
 
 from .models import Category, Recipe, Rating
@@ -146,7 +147,7 @@ def search(request):
 
 def recipe_detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id, status__in=['approved', 'pending'])
-    comments = recipe.comments.filter(status="approved")
+    comments = Comment.objects.filter(recipe=recipe, approved=True)  # Show only approved comments
     ratings = recipe.ratings.all()
     user_rating = ratings.filter(user=request.user).first() if request.user.is_authenticated else None
 

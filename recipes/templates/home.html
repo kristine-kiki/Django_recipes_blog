@@ -70,7 +70,7 @@
                         <hr>
                         <h5>Comments</h5>
                         <ul class="list-group">
-                            {% for comment in recipe.comments.all %}
+                            {% for comment in recipe.approved_comments %}
                             <li class="list-group-item">
                                 <strong>{{ comment.user }}</strong> - {{ comment.created_at|date:"F j, Y, g:i a" }}
                                 <p>{{ comment.text }}</p>

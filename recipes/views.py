@@ -21,10 +21,12 @@ def home(request):
     recipes = Recipe.objects.filter(status='approved').order_by('-created_on')[:6]
     for recipe in recipes:
         recipe.average_rating = recipe.ratings.aggregate(Avg('rating'))['rating__avg']
+        recipe.approved_comments = Comment.objects.filter(recipe=recipe, status='approved')  # Filter approved comments
     return render(
         request, 'home.html', 
         {
             'recipes': recipes,
+
         }
     )
 
@@ -180,6 +182,7 @@ def recipe_detail(request, recipe_id):
                 comment = comment_form.save(commit=False)
                 comment.user = request.user
                 comment.recipe = recipe
+                comment.status = 'pending'
                 comment.save()
                 messages.success(request, "Your comment waiting for approval!")
                 return redirect("recipe_detail", recipe_id=recipe_id)

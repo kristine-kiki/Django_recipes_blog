@@ -3,8 +3,40 @@
     font-family: Roboto, sans-serif;
     font-size: 1.4rem;
     font-weight: 700;
-    color: #618c76;
+    color: #457d60;
 }
+
+h2 {
+    font-family: Roboto, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #457d60;  
+}
+
+li.nav-item {
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.navbar-text {
+    font-family: Roboto, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    padding:0;
+    height: 100%; /* Ensure it takes up the full height of the navbar */
+    margin-top: 4px; /* Adjust this value as needed to fine-tune the alignment */
+    color: #457d60 !important;
+}
+
+.text-muted {
+    color: #618c76;
+    margin-bottom: 0;
+    line-height: inherit;
+}
+
 
 .light-bg {
     background-color: #fff;
@@ -87,7 +119,7 @@
 
 .post-link:hover,
 .page-link {
-    color: #E84610;
+    color: #7CA490;
 }
 
 .post-title {
@@ -109,11 +141,11 @@
 .btn-signup:hover,
 .btn-signup:active {
     background-color: #fff;
-    color: #23BBBB;
+    color: #63a79b;
 }
 
 .link {
-    color: #23BBBB;
+    color: #63a79b;
     text-decoration: none;
 }
 
@@ -123,23 +155,19 @@
     text-decoration: underline;
 }
 
-.btn-like {
-    color: #E84610;
-    border: none;
-    background: transparent;
+.pagination .page-link {
+    color: green; /* Change the text color to green */
 }
 
-.btn-delete {
-    color: #fff;
-    background: #E84610;
+.pagination .page-link:hover {
+    color: darkgreen; /* Change the text color to dark green on hover */
 }
 
-.btn-like:hover,
-.btn-like:active {
-    color: #E84610;
-    background: transparent;
-    border: none;
+.pagination .page-item.active .page-link {
+    background-color: green; /* Change the background color of the active page to green */
+    border-color: green; /* Change the border color of the active page to green */
 }
+
 
 .faded {
     color: rgb(172, 175, 175);
@@ -181,7 +209,7 @@
 }
 
 h2 { 
-    font-family: 'Lato', sans-serif; 
+    font-family: 'Roboto', sans-serif; 
     font-weight: 700; 
     margin-bottom: 1.5rem; 
 }
@@ -196,13 +224,13 @@ h2 {
 }
 
 .btn-primary { 
-    background-color: #007bff; 
-    border-color: #007bff; 
+    background-color: #aba2a7; 
+    border-color: #aba2a7; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .btn-primary:hover { 
-    background-color: #0056b3; 
-    border-color: #0056b3; 
+    background-color: #aba2a7; 
+    border-color: #aba2a7; 
 }
 

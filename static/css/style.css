@@ -6,6 +6,14 @@
     color: #457d60;
 }
 
+body {
+    font-size: 1rem;
+}
+
+p {
+    font-size: 0.875rem;
+}
+
 h2 {
     font-family: Roboto, sans-serif;
     font-size: 1.4rem;
@@ -231,3 +239,12 @@ h2 {
     border-color: #aba2a7; 
 }
 
+@media (max-width: 600px) {
+    body {
+        font-size: 0.875rem;
+    }
+    
+    p {
+        font-size: 0.75rem;
+    }
+}

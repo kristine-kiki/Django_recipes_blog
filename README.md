@@ -1,7 +1,7 @@
 # Recipes Blog 
 
 [Recipe Blog](https://django-recipes-blog-489bc206e230.herokuapp.com/)<br>
-<img src="readMe images\home page.png">
+<img src="readMe images\Screenshot 2025-02-05 at 20.39.22.png">
 
 ## Introduction
 
@@ -19,6 +19,30 @@ Welcome to the [Recipe Blog](https://django-recipes-blog-489bc206e230.herokuapp.
 <li><strong>Responsive Design:</strong> The application is built using Bootstrap for a responsive and user-friendly design and ensures a seamless experience across various devices.</li>
 
 <li><strong>Admin Panel:</strong> Efficiently manage users, recipes, comments and pictures through the Django Admin panel.</li>
+
+### User stories
+As a/an .. | I want to be able to ..
+--------|------------------------
+User | easily understand the main purpose of the blog 
+User | easily navigate throughout the blog to find content.
+User | in Home page see the latest 6 recipes.
+User | see a list of all recipes.
+User | see each recipe in more detail.
+User | see comments and ratings for each recipe.
+User | send the contact form to admin.
+User | sign up for the blog.
+Authorized User | sign in and logout of the blog.
+Authorized User | add recipes what are displayed in All recipes and My recipes.
+Authorized User | add coments and ratings to recipes.
+Authorized User | edit my recipes and change rating for recipes.
+Authorized User | see the status of recipes I created in My recipes
+Authorized User | delete recipes I created
+Admin | approve, reject new Users.
+Admin | add new, edit or delete recipe categories.
+Admin | add new, edit or delete recipes
+Admin | add new, edit or delete pictures for recipes.
+Admin | add new, edit or delete comments
+Admin | receive and read Contact form. 
 
 ## Getting Started
 
@@ -65,13 +89,14 @@ Welcome to the [Recipe Blog](https://django-recipes-blog-489bc206e230.herokuapp.
 
 ## Programs Used
 <li>Django: Backend framework.</li>
-
 <li>Bootstrap: For responsive and sleek design.</li>
-
 <li>PostgreSQL: Database for storing user data, recipes, and comments.</li>
-
+<li>GitHub: Version control</li>
+<li>PIP: Python package manager for installing dependencies</li>
+<li>Heroku: Cloud platform for deployment</li>
+<li>Favicon: Tool to generate favicons</li>
+<li>SweetAlert2: Customizable alerts for better user experience</li>
 <li>JavaScript: Enhances interactive features.</li>
-
 <li>HTML/CSS: Structures and styles the web pages.
 </li>
 
@@ -81,7 +106,7 @@ Welcome to the [Recipe Blog](https://django-recipes-blog-489bc206e230.herokuapp.
 <li>`contact/` - Secondary app directory for the contact form and user inquiries.</li>
 
 ## ERD diagram 
-<img src="readMe images\diagram.png"><br>
+<img src="readMe images\diagramma.png"><br>
 <li>User: One-to-Many with Recipes (a user can create multiple recipes)<br>
 One-to-Many with Comments (a user can leave multiple comments)<br>
 One-to-Many with submiting contact forms (a user can submit multiple contact forms)</li>

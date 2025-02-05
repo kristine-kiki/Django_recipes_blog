@@ -4,8 +4,9 @@
 
 {% block content %}
 <div class="container mt-4">
+    <!--back to All recipes button-->
     <a href="{% url 'recipe_list' %}" class="btn btn-secondary mb-3">Back to All Recipes</a>
-
+    <!--edit and delete buttons, visible just to author-->
     {% if recipe.user == request.user %}
         <div class="mb-3">
             <a href="{% url 'recipe_edit' recipe.id %}" class="btn btn-primary">Edit Recipe</a> 
@@ -15,7 +16,7 @@
             </form>
         </div>
     {% endif %}
-
+    <!--recipe details-->
     <h1>{{ recipe.title }}</h1>
     <p>{{ recipe.description }}</p>
     <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
@@ -24,8 +25,9 @@
     <p><strong>Categories:</strong> {{ recipe.categories.all|join:", " }}</p>
     <p><strong>Author:</strong> {{ recipe.user.username }}</p>
     <p><strong>Average Rating:</strong> {{ recipe.average_rating|floatformat:1|default:"No ratings yet" }} &#9733;</p>
-
+    
     {% if user.is_authenticated %}
+    <!--rating form-->
     <h5 class="mt-4">Rate This Recipe</h5>
     <form method="POST" action="{% url 'recipe_detail' recipe.id %}">
         {% csrf_token %}
@@ -38,7 +40,7 @@
         </div>
         <button type="submit" class="btn btn-primary mt-2" name="rating_submit">Submit Rating</button>
     </form>
-
+    <!--success alert for rating-->
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="rating-success-alert"
         style="display:none;">
         Rating submitted successfully!
@@ -51,6 +53,7 @@
     {% endif %}
 
     {% if user.is_authenticated %}
+    <!--comment form-->
     <h5>Add a Comment</h5>
     <form method="POST" action="{% url 'recipe_detail' recipe.id %}" onsubmit="showApprovalMessage()">
         {% csrf_token %}
@@ -59,16 +62,16 @@
     </form> 
 
     <hr>
-
+    <!--success alert for comment-->
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="comment-success-alert"
         style="display:none;">
         Comment submitted successfully!
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% else %}
-    <p><a href="{% url 'login' %}">Log in</a> to comment on this recipe.</p>
+    <p><a href="{% url 'login' %}">Log in</a> to comment on this recipe.</p> <!--dirrect to login if not authenticated-->
     {% endif %}
-
+    <!--comments section-->
     <h5>Comments</h5>
     <ul class="list-group">
         {% for comment in comments %}
@@ -106,6 +109,7 @@
 </script>
 
 <script>
+    //function to show approval message when comment is submitted
     function showApprovalMessage() {
         var approvalModal = new bootstrap.Modal(document.getElementById('approvalModal'));
         approvalModal.show();

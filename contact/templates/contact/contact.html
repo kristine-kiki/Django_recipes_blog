@@ -7,10 +7,11 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 my-5">
             <h2>Contact Us!</h2>
-            <p>If you believe you can make a difference in people's lives, by making their daily routine more enjoyable 
-                by delivering delicious food, then you are the person we’re looking for!
-                We’re excited to hear from you. Fill out the form
-                and we can get the ball rolling!</p>
+            <p>Do you believe you can make a difference in people's lives, by making their daily routine more enjoyable 
+                with delicious food? If so, we want to hear from you!We're excited to get to know you. Fill out the form
+                below, and let's start this delicious journey together!<br>If you have any ideas, concerns, or
+                just want to share your thoughts, feel free to fill out the form as well. We're here to listen and collaborate
+                with you!</p>
 
             {% if messages %}
                 {% for message in messages %}
@@ -23,14 +24,14 @@
             <!-- Contact Form -->
             <form id="contactForm" method="post" action="{% url 'contact' %}">
                 {% csrf_token %}
-                {{ contact_form | crispy }}
+                {{ contact_form | crispy }} <!--render the contact form using forms for styling-->
                 <button class="btn btn-secondary" type="submit">Submit</button>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap Modal (Will be triggered after form submission) -->
+<!-- Bootstrap Modal (triggered after form submission) -->
 <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

@@ -17,10 +17,11 @@ from .forms import RecipeForm, RatingForm, CommentForm
 
 # Create your views here.
 
+# home view to display the latest 6 approved recipes
 def home(request):
     recipes = Recipe.objects.filter(status='approved').order_by('-created_on')[:6]
     for recipe in recipes:
-        recipe.average_rating = recipe.ratings.aggregate(Avg('rating'))['rating__avg']
+        recipe.average_rating = recipe.ratings.aggregate(Avg('rating'))['rating__avg'] # display avarage rating
         recipe.approved_comments = Comment.objects.filter(recipe=recipe, status='approved')  # Filter approved comments
     return render(
         request, 'home.html', 
@@ -29,13 +30,13 @@ def home(request):
 
         }
     )
-
+# Class-based view to list recipes with pagination
 class RecipeList(ListView):
     model = Recipe
     template_name = "recipes/recipe_list.html"
     context_object_name = 'recipes'
     paginate_by = 6
-
+#Function-based view to list recipes with pagination
 def recipe_list(request):
     # Fetch approved recipes and original recipes awaiting editing approval
     recipes = Recipe.objects.filter(status='approved')
@@ -45,7 +46,6 @@ def recipe_list(request):
     page_number = request.GET.get('page')  # Get the current page number
     page_obj = paginator.get_page(page_number)  # Paginate the query
     
-
     return render(
         request,
         "recipes/recipe_list.html",
@@ -54,6 +54,7 @@ def recipe_list(request):
         }
     )
 
+# view to add a new recipe
 @login_required(login_url='account_login')
 def add_recipe(request):
     if request.method == 'POST':
@@ -76,6 +77,7 @@ def add_recipe(request):
         }
     )
 
+# view to edit an existing recipe
 @login_required
 def recipe_edit(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
@@ -99,7 +101,7 @@ def recipe_edit(request, recipe_id):
             'recipe': recipe
         }
     )
-
+# view to delete recipe
 def delete_recipe(request, id):
     # Get the recipe object or return a 404 error if not found
     recipe = get_object_or_404(Recipe, id=id)
@@ -115,9 +117,10 @@ def delete_recipe(request, id):
     # Display a success message
     messages.success(request, "Recipe deleted successfully.")
 
-    # Redirect to the list of recipes or wherever appropriate
+    # Redirect to the list of recipes/ All recipes
     return redirect('recipe_list')
 
+# view to display user`s own recipes`
 @login_required
 def my_recipes(request):
     recipes = Recipe.objects.filter(user=request.user)
@@ -128,12 +131,13 @@ def my_recipes(request):
             'recipes': recipes,
         }
     )
-
+# class-based view to display the details of recipe
 class RecipeDetail(DetailView):
     model = Recipe
     template_name = "recipes/recipe_detail.html"
     context_object_name = 'recipe'
 
+#view to search for recipes
 def search(request):
     query = request.GET.get('query')
     if query:
@@ -147,7 +151,7 @@ def search(request):
             'results': results
         }
     )
-
+# view to display details of a recipe and handle rating and comment submissions
 def recipe_detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id, status__in=['approved', 'pending'])
     comments = Comment.objects.filter(recipe=recipe, status='approved')  # Show only approved comments
@@ -155,7 +159,7 @@ def recipe_detail(request, recipe_id):
     user_rating = ratings.filter(user=request.user).first() if request.user.is_authenticated else None
 
     # Initialize forms
-    rating_form = RatingForm()  # If you have a form to handle rating submissions
+    rating_form = RatingForm()  # form to handle rating submissions
     comment_form = CommentForm()  # Initialize the comment form
     rating_range = [1, 2, 3, 4, 5]  # A range of rating options (1 to 5)
 
@@ -200,7 +204,7 @@ def recipe_detail(request, recipe_id):
             "rating_range": rating_range,
         },
     )
-
+# view to handle user login
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -213,18 +217,19 @@ def login_view(request):
 
     return render(request, 'registration/login.html', {'form': form})
 
+# view to handle user signup
 def signup_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            # After the user is created, you can redirect them to the login page or the home page
             return redirect('account_login')  # Redirect to the login page
     else:
         form = UserCreationForm()
 
     return render(request, 'registration/signup.html', {'form': form})
 
+# view to handle user logout
 def logout_view(request):
     if request.method == "POST":
         logout(request)

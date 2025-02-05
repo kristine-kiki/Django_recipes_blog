@@ -5,6 +5,7 @@
 {% block content %}
 <div class="container mt-4">
     <h2>Search Recipes</h2>
+    <!--search form-->
     <form method="GET" action="{% url 'search' %}" class="d-flex search-form">
         <div class="input-group">
             <input class="form-control" type="search" placeholder="Search for recipes or ingredients" aria-label="search" name="query" value="{{ query }}">
@@ -17,10 +18,11 @@
     {% if results %}
     <div class="mt-4">
         <h3>Search Results</h3>
+        <!--list of search results-->
         <ul class="list-group">
             {% for recipe in results %}
             <li class="list-group-item">
-                <a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.title }}</a>
+                <a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.title }}</a> <!--link to recipe-->
             </li>
             {% endfor %}
         </ul>
@@ -34,6 +36,7 @@
 {% endblock %}
 
 <script>
+    //function to open a recipe in a popup window
     function openRecipeInPopup(url) {
         window.open(url, 'Recipe', 'width=800,height=600');
         return false;

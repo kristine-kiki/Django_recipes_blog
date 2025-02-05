@@ -5,15 +5,18 @@
 {% block content %}
 <div class="container mt-4">
     <h1>My Recipes</h1>
+    <!--button to add a new recipe-->
     <a href="{% url 'add_recipe' %}" class="btn btn-primary mb-3">Add Recipe</a>
     <div class="list-group">
+        <!--loop through each recipe and display its details-->
         {% for recipe in recipes %}
         <a href="{% url 'recipe_detail' recipe.id %}" class="list-group-item list-group-item-action">
-            <h5 class="mb-1">{{ recipe.title }}</h5>
-            <p class="mb-1">{{ recipe.description }}</p>
-            <small>Status: {{ recipe.status }}</small>
+            <h5 class="mb-1">{{ recipe.title }}</h5> <!--title-->
+            <p class="mb-1">{{ recipe.description }}</p> <!--decription-->
+            <small>Status: {{ recipe.status }}</small> <!--status-->
         </a>
         {% empty %}
+        <!--message if user has no any recipes-->
         <p class="text-muted">You have no recipes yet. Add a new recipe to get started!</p>
         {% endfor %}
     </div>

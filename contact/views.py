@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import ContactMessageForm
-from .models import ContactForm
+from django.contrib import messages #import messages for displaying messages to the user
+from .forms import ContactMessageForm #import ContactMessageForm from forms
+from .models import ContactForm #import ContactForm model
 
 
 def contact_view(request):

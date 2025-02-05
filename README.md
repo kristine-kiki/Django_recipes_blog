@@ -25,7 +25,7 @@ Welcome to the [Recipe Blog](https://django-recipes-blog-489bc206e230.herokuapp.
 
 ### Installation
 
-1. **Install Jango**
+1. **Install Django**
 
     ```bash
     pip3 install Django~=4.2.1
@@ -103,3 +103,4 @@ The project was initially created in Gitpod and deployed on Heroku. Afterward, t
 ## Credits
 <li>BBC recipes (recipes and pictures has been copied)</li>
 <li> The base.html file has been built on the foundation of the 'I think I can blog!' project
+<li>SheCodes and Udemy

@@ -1,8 +1,8 @@
-from . import views #imort views from the current package
 from django.urls import path #import path function to define URL patterns
 from django.contrib.auth import views as auth_views #import Djngo`s built-in auth views
 from django.conf.urls.static import static #import static function to serve static files during development
 from django.conf import settings #import settings to access project settings
+from . import views #imort views from the current package
 
 urlpatterns = [
     path('', views.home, name='home'),  # Home page

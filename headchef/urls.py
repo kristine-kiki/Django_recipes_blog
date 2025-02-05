@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin #import admin module to enable the admin interface
 from django.urls import path, include #import path and anclude functions to define URL patterns
-from recipes import views #impot views from the recipe app
 from django.contrib.auth import views as auth_views #import auth views for autification
 from django.conf.urls.static import static #import statics to serve static and media files during development
 from django.conf import settings #import settings to access project settings
+from recipes import views #impot views from the recipe app
 
 urlpatterns = [
     path('accounts/', include("allauth.urls")), #include allauth URLs for user autheficiation and account managment

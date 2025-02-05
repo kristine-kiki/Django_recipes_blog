@@ -1,7 +1,7 @@
 from django.contrib import admin #import Django`s admin module
-from .models import Category, Recipe, Comment #models from the current app
 from django_summernote.admin import SummernoteModelAdmin #SummernoteModelAdmin for rich text editing
 from django.utils.html import mark_safe #mark-safe to safely render HTML
+from .models import Category, Recipe, Comment #models from the current app
 
 # admin class for Recipe model
 class RecipeAdmin(SummernoteModelAdmin):

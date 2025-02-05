@@ -107,16 +107,18 @@ Admin | receive and read Contact form.
 
 ## ERD diagram 
 <img src="readMe images\diagramma.png"><br>
-<li>User: One-to-Many with Recipes (a user can create multiple recipes)<br>
-One-to-Many with Comments (a user can leave multiple comments)<br>
-One-to-Many with submiting contact forms (a user can submit multiple contact forms)</li>
-<li>Recipe: Many-to-One with User (a recipe can be created by one user)<br>
-One-to-Many with Comments (a recipe can have multiple comments)<br>
-One-to-Many with Ratings (a recipe can have multiple ratings).</li>
-<li>Comment: Many-to-One with User (A comment is left by one user)<br>
-Many-to-One with Recipe (A comment belongs to one recipe) Needs Admin`s approval.</li>
-<li>Rating: Many-to-one with user (A rating is given by one user) <br>Many-to-One with Recipe (A rating belongs to one recipe)</li>
-<li>ContactFormSubmission: Many-to-One with User (a contact form submission can be submitted by one user).</li>
+<li><strong>User:</strong> Fields: id, username, email, password, created_at<br>
+<strong>Description:</strong> Stores user information including their login credentials and registration timestamp.</li>
+<li><strong>Recipes:</strong> Fields: id, user_id, title, description, created_at, updated_at <br>
+<strong>Description:</strong> Contains details of recipes submitted by users. user_id links to the user who submitted the recipe. updated_at tracks the last modification time.</li>
+<li><strong>Comments:</strong> Fields: id, recipe_id, user_id, content, created_at, status, admin_id, approval_timestamp<br>
+<strong>Description:</strong> Holds comments made on recipes. status indicates whether a comment is pending, approved, or rejected. admin_id links to the admin who approved or rejected the comment, and approval_timestamp records the time of the action.</li>
+<li><strong>Rating:</strong> Fields: id, user_id, recipe_id, rating, comment, created_at<br>
+<strong>Description:</strong>Stores user ratings for recipes. rating is an integer between 1 and 5. Optionally, users can leave a comment along with their rating.</li>
+<li><strong>Admin Panel</strong> Fields: id, user_id, role, permissions, approval_status, created_at <br>
+<strong>Description:</strong> Manages admin roles and permissions. approval_status tracks the status of various actions (pending, approved, rejected).</li>
+<li><strong>Approvals/Rejections</strong>Fields: id, admin_id, user_id, action, reason, created_at<br>
+<strong>Description:</strong>Logs actions taken by admins regarding approvals and rejections. Includes the reason for the action and the created_at timestamp.
 
 ## Deployment
 The project was initially created in Gitpod and deployed on Heroku. Afterward, the project was migrated to VS Code for further development and maintenance.

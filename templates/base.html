@@ -167,7 +167,9 @@
                 text: "Do you really want to delete this recipe? This action cannot be undone.",
                 icon: "warning",
                 showCancelButton: true,
+                confirmButtonColor:'#74c37f',
                 confirmButtonText: "Yes, delete it!",
+                cancelButtonColor: '#fe4d60',
                 cancelButtonText: "Cancel",
                 reverseButtons: true
             }).then((result) => {
@@ -177,6 +179,7 @@
                         title: "Deleted!",
                         text: "Your recipe has been successfully deleted.",
                         icon: "success",
+                        confirmButtonColor:'#74c37f',
                         confirmButtonText: "OK"
                     }).then(() => {
                         this.submit(); // Submit the form programmatically

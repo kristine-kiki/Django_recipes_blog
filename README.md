@@ -139,7 +139,7 @@ Many-to-One: Many contact form entries can be submitted by one user.</li><br>
 ## Testing
 ### Testing Using Validators
 Upon completion of the writing process, developer used
-[W3C MarkUp Validation Service](https://validator.w3.org/), <img src="readMe images\validator.w3.png">
+[W3C MarkUp Validation Service](https://validator.w3.org/), <img src="readMe images\validator.w3.png"><br>
 and [PEP8 online](http://pep8online.com/) to check the validity of the code. Code passed the tests with some errors that cannot be fixed. For example, too long lines that cannot be shortened or split in two.
 
 Website was also tested using [Lighhouse](https://developers.google.com/web/tools/lighthouse). The following reports were generated on home and products pages:
@@ -184,24 +184,23 @@ The website was tested and proved to be issue-free on the following browsers:
 ### Bugs and fixes
 <li>Comments didn`t show up after Admin approved them. I add status field ('approved', 'pending', 'rejected').Updated logic in views and templates, to show just approved comments.
 <li>The pop-up windows were not displaying correctly when the user wanted to delete a recipe. I added JavaScript to the base.html file to handle the pop-up functionality and used SweetAlert2 for better styling and UX
-<li>Recipes were visible in the blog even when their status was pending and they hadn't been approved by the admin. I added a status field to track approval, updated the approval logic, and updated views and templates to show only approved recipes.
-<li>At the end of the project background image were not displayed correctly. i veryfied the correct path, ensured the image were in the correct directorie, and ran collectstatic command to gather static files.Cleared browsing data.<li>
-<li>Many bugs were resolved using Django's debug mode. This feature made it easy to identify the causes of errors and address them. For more complex issues, I could quickly find solutions by searching for the exact error messages.<li>
+<li>Recipes were visible in the blog even when their status was pending and they hadn't been approved by the admin. I added a status field to track approval, updated the approval logic, and updated views and templates to show only approved recipes.</li>
+<li>At the end of the project background image were not displayed correctly. i veryfied the correct path, ensured the image were in the correct directorie, and ran collectstatic command to gather static files.Cleared browsing data.</li>
+<li>Many bugs were resolved using Django's debug mode. This feature made it easy to identify the causes of errors and address them. For more complex issues, I could quickly find solutions by searching for the exact error messages.</li>
 
 ## Cloning This Project
 To create a clone, follow these steps:<br>
-<li>Log in to GitHub and navigate to the repository.</li><br>
-<li>Click on the "Code" button.</li><br>
-<li>Select "Open with GitHub Desktop" and follow the prompts in the GitHub Desktop Application, or follow GitHub's instructions for cloning the repository using other methods.</li><br>
+<li>Log in to GitHub and navigate to the repository.</li>
+<li>Click on the "Code" button.</li>
+<li>Select "Open with GitHub Desktop" and follow the prompts in the GitHub Desktop Application, or follow GitHub's instructions for cloning the repository using other methods.</li>
 
 ### Working with Your Local Clone
-<li>Install the requirements from "requirements.txt" using pip install.</li><br>
-
-<li>Build a new database with the commands python3 manage.py makemigrations and python3 manage.py migrate.</li><br>
-<li>Create a new superuser by running python3 manage.py createsuperuser and follow the prompts.</li><br>
-<li>Start the Django application using python3 manage.py runserver.</li><br>
-<li>Log in using your superuser credentials by appending /admin to the URL.</li><br>
-<li>From the admin panel, you can easily create, read, update, and delete records, including recipes, users, and email lists.</li><br>
+<li>Install the requirements from "requirements.txt" using pip install.</li>
+<li>Build a new database with the commands python3 manage.py makemigrations and python3 manage.py migrate.</li>
+<li>Create a new superuser by running python3 manage.py createsuperuser and follow the prompts.</li>
+<li>Start the Django application using python3 manage.py runserver.</li>
+<li>Log in using your superuser credentials by appending /admin to the URL.</li>
+<li>From the admin panel, you can easily create, read, update, and delete records, including recipes, users, and email lists.</li>
 
 ## Deployment
 The project was initially created in Gitpod and deployed on Heroku. Afterward, the project was migrated to VS Code for further development and maintenance.<br>

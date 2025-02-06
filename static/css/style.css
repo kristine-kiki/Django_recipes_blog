@@ -48,7 +48,7 @@ li.nav-item {
 }
 
 .main-bg {
-    background-image: url('/static/images/background.jpg');
+    background-image: url('/static/images/blogbackground.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -229,14 +229,14 @@ h2 {
 }
 
 .btn-primary { 
-    background-color: #aba2a7; 
-    border-color: #aba2a7; 
+    background-color: #92898e; 
+    border-color: #92898e; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .btn-primary:hover { 
-    background-color: #aba2a7; 
-    border-color: #aba2a7; 
+    background-color: #92898e; 
+    border-color: #92898e; 
 }
 
 @media (max-width: 600px) {

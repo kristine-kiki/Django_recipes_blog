@@ -120,6 +120,17 @@ Admin | receive and read Contact form.
 <li><strong>Approvals/Rejections</strong>Fields: id, admin_id, user_id, action, reason, created_at<br>
 <strong>Description:</strong>Logs actions taken by admins regarding approvals and rejections. Includes the reason for the action and the created_at timestamp.
 
+## Testing
+### Testing Using Validators
+Upon completion of the writing process, developer used
+[W3C MarkUp Validation Service](https://validator.w3.org/), and [PEP8 online](http://pep8online.com/) to check the validity of the code. Code passed the tests with some errors that cannot be fixed. For example, too long lines that cannot be shortened or split in two.
+
+Website was also tested using [Lighhouse](https://developers.google.com/web/tools/lighthouse). The following reports were generated on home and products pages:
+![lighthouse-report](staticfiles\images\lighthouse.png)
+
+![lighthouse-report](static\images\addrecipe.png)
+
+
 ## Deployment
 The project was initially created in Gitpod and deployed on Heroku. Afterward, the project was migrated to VS Code for further development and maintenance.
 

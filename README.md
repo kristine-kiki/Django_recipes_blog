@@ -44,6 +44,53 @@ Admin | add new, edit or delete pictures for recipes.
 Admin | add new, edit or delete comments
 Admin | receive and read Contact form. 
 
+## Design Process & UX/UI
+
+A thoughtful design process was undertaken to ensure the Recipe Blog is intuitive, user-friendly, and visually appealing, aligning with the goal of creating a welcoming space for cooking enthusiasts.
+
+### Design Philosophy
+The core design philosophy was to create a clean, organized, and accessible interface. Key considerations included:
+*   **Clarity:** Ensuring that users can easily find recipes, understand site navigation, and interact with features like commenting and rating.
+*   **Simplicity:** Avoiding clutter and unnecessary complexity to keep the focus on the recipes and community interaction.
+*   **Responsiveness:** Prioritizing a seamless experience across all devices, from desktops to mobile phones, achieved through the use of Bootstrap.
+*   **Engagement:** Encouraging user participation through clear calls to action for adding recipes, commenting, and rating.
+
+The initial inspiration was drawn from popular recipe platforms, focusing on elements that contribute to a positive user experience, such as clear recipe layouts and intuitive search functionality.
+
+### Background Imagery
+A key element of the visual design is the use of high-quality, food-themed background imagery.
+*   **Style:** The primary background image is a photographic flat-lay or still life composition featuring fresh culinary ingredients such as carrots, onions, cabbage, a bottle of oil, and other kitchen staples.
+*   **Placement:** This image is prominently used as a full-width banner at the top of pages and also appears as a subtle, textured backdrop behind the main content area on pages like "All Recipes".
+*   **Purpose:** The imagery serves to immediately establish the blog's theme, create an inviting and appetizing atmosphere, and visually engage the user, reinforcing the focus on cooking and fresh ingredients.
+![Main Background Image Snippet](/readMe%20images/blogbackground.jpg)
+
+
+### Wireframes
+To visualize the structure and layout of key pages before development, a series of wireframes were created. These helped in planning the placement of elements and user flow.
+
+**1. Main Pages (Recipe List & Add Recipe Form):**
+   The image below shows the wireframes for the main recipe listing page and the "Add Recipe" form page.
+   ![Wireframes for Main Recipe List and Add Recipe Form](/readMe%20images/wireframe.png) 
+   
+   *   **Main Recipe List Page (Left in image):** Includes header navigation, a prominent search bar, a grid display for recipe cards (each with an image, title, rating, and view button), and a footer.
+   *   **Add Recipe Form Page (Right in image):** Includes a header, a structured form with fields for title, ingredients, instructions, cooking time, categories, image upload, and a submission button, along with a footer.
+
+**2. User Interaction Pages (Contact & My Recipes):**
+   Further wireframes were developed for key user interaction pages, as shown below.
+   ![Wireframes for Contact Us and My Recipes Pages](/readMe%20images/wireframe1.png) 
+   *   **Contact Us Page (Left in image):** Features a title, introductory text, input fields for Name, Email, and Message, and a submit button, all within a standard header/footer layout.
+   *   **My Recipes Page (Right in image):** Designed to display a list of recipes submitted by the logged-in user. It includes a title, an "Add Recipe" button, and a list view where each recipe displays its title and current status (e.g., approved/pending).
+
+### Colour Scheme & Palette
+The color scheme was chosen to be inviting, to complement food imagery, and to ensure good readability and visual hierarchy. The defined palette below was used consistently throughout the application. If CSS custom properties were used, their names are listed below.
+![Colour Scheme](/readMe%20images/hexcode.png)
+
+### Typography
+The fonts were selected for readability and to match the overall aesthetic of the blog.
+*   **Headings:** Font Name, Roboto - Chosen for its clean and modern look, providing clear visual hierarchy.
+*   **Body Text:** Font Name, also Roboto - Selected for its excellent readability across different screen sizes.
+
+
 ## Getting Started
 
 

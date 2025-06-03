@@ -79,6 +79,7 @@ def add_recipe(request):
             recipe.user = request.user
             recipe.status = "pending"
             recipe.save()
+            form.save_m2m()
             messages.add_message(
                 request, messages.SUCCESS, "Recipe submitted for approval!"
             )
@@ -97,6 +98,10 @@ def recipe_edit(request, recipe_id):
     Model:Recipe
     """
     recipe = get_object_or_404(Recipe, id=recipe_id)
+    if recipe.user != request.user:
+        messages.error(request, "Not authorized to edit this recipe.")
+        return redirect("recipe_detail", recipe_id=recipe_id)
+    
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES, instance=recipe)
         if form.is_valid():
@@ -106,6 +111,7 @@ def recipe_edit(request, recipe_id):
                 recipe  # Link the edited version to the original recipe
             )
             recipe_edited.save()
+            form.save_m2m()
             messages.add_message(
                 request, messages.SUCCESS, "Edition submitted for approval"
             )
@@ -134,7 +140,7 @@ def delete_recipe(request, id):
     # Check if the current user is the owner of the recipe
     if recipe.user != request.user:
         messages.error(request, "Not authorized to delete this recipe.")
-        return redirect("recipe_detail", id=id)
+        return redirect("recipe_detail", recipe_id=id)
 
     # Delete the recipe
     recipe.delete()

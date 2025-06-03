@@ -20,6 +20,18 @@ Welcome to the [Recipe Blog](https://django-recipes-blog-489bc206e230.herokuapp.
 
 <li><strong>Admin Panel:</strong> Efficiently manage users, recipes, comments and pictures through the Django Admin panel.</li>
 
+## Agile Development Approach
+
+This project was developed following Agile principles to allow for iterative development, flexibility, and continuous improvement. While primarily a solo project, the Agile mindset was applied through:
+
+*   **User Stories:** The project began by defining clear user stories to capture the core requirements from different user perspectives. These served as the backlog of features to be implemented.
+*   **Iterative Development:** Features were developed in manageable chunks or iterations. For example, user authentication might be one iteration, followed by recipe creation, then commenting, etc. This allowed for focusing on specific functionalities and testing them before moving to the next.
+*   **Prioritization:** User stories and tasks were implicitly prioritized based on core functionality needed for a minimum viable product (MVP) and then expanded upon.
+*   **Regular Review (Self-Review):** At the end of developing a feature or a set of related features, a self-review process was undertaken to check against the user stories, test functionality, and identify any immediate bugs or areas for improvement.
+*   **Adaptability:** The Agile approach allowed for adapting to challenges or new insights during development. For instance, if a particular implementation proved difficult, alternative approaches could be considered. The "Bugs and Fixes" section reflects some of the adaptations and problem-solving that occurred.
+
+While formal Agile ceremonies were not applicable to this solo project, the core values of delivering working software incrementally, responding to feedback (even self-generated or from mentors), and focusing on user needs were central to the development process. The User Stories section and the "Bugs and Fixes" section provide insight into this iterative approach.
+
 ### User stories
 As a/an .. | I want to be able to ..
 --------|------------------------
@@ -134,18 +146,19 @@ The fonts were selected for readability and to match the overall aesthetic of th
     ```
     Open your browser and go to `http://127.0.0.1:8000` to see my Recipe Blog project in action.
 
-## Programs Used
-<li>Django: Backend framework.</li>
-<li>Bootstrap: For responsive and sleek design.</li>
-<li>PostgreSQL: Database for storing user data, recipes, and comments.</li>
-<li>GitHub: Version control</li>
-<li>PIP: Python package manager for installing dependencies</li>
-<li>Heroku: Cloud platform for deployment</li>
-<li>Favicon: Tool to generate favicons</li>
-<li>SweetAlert2: Customizable alerts for better user experience</li>
-<li>JavaScript: Enhances interactive features.</li>
-<li>HTML/CSS: Structures and styles the web pages.
-</li>
+## Technology Rationale
+
+The technologies for this project were chosen to provide a robust, scalable, and maintainable platform for the Recipe Blog, and to leverage their strengths for specific project needs:
+
+*   **Python & Django:** Python was selected for its readability and extensive libraries. Django, as a high-level Python web framework, was chosen for its "batteries-included" philosophy, providing a powerful ORM for database interaction, a built-in administrative panel for easy content management, security features, and a structured approach (MVT - Model-View-Template) that accelerates web development.
+*   **PostgreSQL:** Utilized as the relational database in production (Heroku) for its reliability, data integrity, and advanced features suitable for scalable applications. (During local development, Django's default SQLite may have been used for simplicity).
+*   **HTML, CSS, JavaScript:** These are the foundational web technologies. HTML structures the content, CSS (with Bootstrap) styles it, and JavaScript enhances user interactivity, particularly with features like SweetAlert2.
+*   **Bootstrap:** Integrated for frontend styling to ensure a responsive, mobile-first design. Its grid system and pre-styled components allowed for rapid development of a consistent and user-friendly interface across various devices.
+*   **Cloudinary:** Chosen for external image management. This offloads image storage and processing (like resizing or format conversion) from the main application server, improving performance and simplifying image handling.
+*   **Heroku:** Selected as the Platform-as-a-Service (PaaS) for deployment, due to its ease of use for Django applications, integration with GitHub, and management of server infrastructure.
+*   **SweetAlert2:** Implemented to provide richer, more engaging user notifications and confirmation dialogs (e.g., for recipe deletion) compared to standard browser alerts, enhancing the overall user experience.
+*   **Git & GitHub:** Utilized for version control, enabling systematic tracking of code changes, collaboration (if applicable), and providing a history of the project's development.
+*   **Gunicorn:** Used as the WSGI HTTP server for running the Django application in the Heroku production environment, as it's a common and robust choice for Python web applications.
 
 ## Project Structure
 <li>`headchef/` - Main project directory containing settings and configuration files.</li>
@@ -199,27 +212,30 @@ The website was tested manually on both large and small screens during developme
 ### Client Stories Testing
 The website was tested against the client stories to ensure all user requirements and expectations were met.
 
-### Test Cases
-Test Cases
-Here's a list of some test cases performed for the recipe blog (just a part of them):
+### Manual Testing and Test Cases
 
-1.A user can register an account with a unique username - Pass;<br>
-2.A user cannot register an account with a username that already exists in the database - Pass;<br>
-3.Registered user can log in and log out - Pass;<br>
-4.User can see a list of recipes - Pass;<br>
-5.User can go to a recipe page and see its details, including comments and rating - Pass;<br>
-6.Logged-in user can post comments and rate recipes - Pass;<br>
-7.Comments appear after admin`s approval are associated with the correct recipe - Pass;<br>
-8.Logged-in user can see own added recipes into My recipes - Pass;<br>
-9.Logged-in user can see status of recipes - Pass;<br>
-10.Logged-in user can edit and delete own recipes - Pass;<br>
-11.Admin can approve or reject comments - Pass;<br>
-12.Admin can add, update, and delete recipes through the website - Pass;<br>
-13.Admin can manage user roles and permissions - Pass;<br>
-14.All User can search for recipes using keywords - Pass;<br>
-15.User can send a message using the contact form - Pass;<br>
-16.Admin receives and can read contact form messages - Pass;<br>
-17.All links are valid and redirect to the proper page - Pass.<br>
+The website was tested manually on both large and small screens during development. This included testing navigation, responsiveness across different screen sizes, database operations (Create, Read, Update, Delete), and overall application functionality. The website was also tested against the client stories to ensure all user requirements and expectations were met.
+Below is a sample of the detailed test cases performed:
+
+| Test ID | Feature / User Story ID | Test Description                                       | Steps to Reproduce                                                                                                | Expected Result                                                                                                | Actual Result | Pass/Fail |
+|---------|-------------------------|--------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|---------------|-----------|
+| TC-001  | US-Signup               | A user can register an account with a unique username. | 1. Navigate to the "Register" page. <br>2. Enter a unique username, email, and password. <br>3. Click "Sign Up".         | User account is created. User is redirected to the login page. A success message for registration is displayed.    | As expected   | Pass      |
+| TC-002  | US-Signup               | A user cannot register with an existing username.      | 1. Navigate to the "Register" page. <br>2. Enter an already existing username, email, and password. <br>3. Click "Sign Up". | An error message is displayed indicating the username is already taken. User remains on the registration page.     | As expected   | Pass      |
+| TC-003  | US-LoginLogout          | A registered user can log in and log out.              | 1. Navigate to "Login" page. <br>2. Enter valid credentials. Click "Login". <br>3. Click "Logout" link.                  | User successfully logs in. After clicking logout, user is logged out and redirected (e.g., to home page).         | As expected   | Pass      |
+| TC-004  | US-ViewRecipes          | A user can see a list of all approved recipes.         | 1. Navigate to the "All Recipes" page.                                                                            | A list/grid of approved recipes is displayed, showing titles, images, and brief descriptions.                  | As expected   | Pass      |
+| TC-005  | US-ViewRecipes          | A user can view recipe details, comments, and rating.  | 1. From "All Recipes", click on a recipe's "View Recipe" button.                                                  | The full recipe details page is displayed, including ingredients, instructions, comments, and average rating.      | As expected   | Pass      |
+| TC-006  | US-AddCommentRating     | A logged-in user can post comments and rate recipes.   | 1. Log in. <br>2. Navigate to a recipe detail page. <br>3. Submit a comment and a rating using the respective forms.  | Comment is submitted (pending approval). Rating is submitted/updated. Appropriate success messages are shown.   | As expected   | Pass      |
+| TC-007  | US-AdminComments        | Approved comments are displayed on the recipe page.    | 1. As Admin, approve a pending comment. <br>2. As a User, navigate to the recipe detail page for that recipe.     | The newly approved comment is visible under the recipe.                                                        | As expected   | Pass      |
+| TC-008  | US-ViewMyRecipes        | A logged-in user can see their own added recipes.      | 1. Log in. <br>2. Navigate to the "My Recipes" page.                                                              | A list of recipes created by the logged-in user is displayed.                                                  | As expected   | Pass      |
+| TC-009  | US-ViewMyRecipes        | A logged-in user can see the status of their recipes.  | 1. Log in. <br>2. Navigate to "My Recipes".                                                                       | Each recipe in the list displays its current status (e.g., "Pending", "Approved").                             | As expected   | Pass      |
+| TC-010  | US-EditRecipeRating / US-DeleteRecipe | A logged-in user can edit and delete their own recipes. | 1. Log in. <br>2. Go to "My Recipes". <br>3. Click "Edit" on a recipe, modify, and save. <br>4. Click "Delete" on a recipe and confirm. | Recipe is successfully updated after editing. Recipe is successfully removed after deletion.                  | As expected   | Pass      |
+| TC-011  | US-AdminComments        | An admin can approve or reject comments.               | 1. Log in as Admin. <br>2. Navigate to the admin panel section for comments. <br>3. Approve a pending comment. <br>4. Reject another pending comment. | Comment status changes to "Approved" or is removed/marked as "Rejected".                                     | As expected   | Pass      |
+| TC-012  | US-AdminRecipes         | An admin can add, update, and delete recipes.          | 1. Log in as Admin. <br>2. Use admin interface to add a new recipe. <br>3. Edit an existing recipe. <br>4. Delete a recipe. | Admin can perform all CRUD operations on recipes successfully.                                                 | As expected   | Pass      |
+| TC-013  | US-AdminUsers           | An admin can manage user roles and permissions.        | 1. Log in as Admin. <br>2. Navigate to the user management section in admin panel. <br>3. Modify a user's status or permissions (e.g., make staff). | User permissions/roles are updated as per admin actions.                                                       | As expected   | Pass      |
+| TC-014  | US-Search               | Any user can search for recipes using keywords.        | 1. On any page with search bar, enter a keyword (e.g., "chicken", "pasta"). <br>2. Click "Search".                   | A list of recipes matching the keyword in title or ingredients is displayed.                                   | As expected   | Pass      |
+| TC-015  | US-Contact              | A user can send a message using the contact form.      | 1. Navigate to the "Contact" page. <br>2. Fill in name, email, and message. <br>3. Click "Submit".                  | A success message is displayed, and the message is sent to the admin system.                                   | As expected   | Pass      |
+| TC-016  | US-Contact              | An admin receives and can read contact form messages.  | 1. Log in as Admin. <br>2. Navigate to the admin section for contact messages.                                    | Submitted contact messages are visible and readable by the admin.                                              | As expected   | Pass      |
+| TC-017  | US-Navigation           | All links are valid and redirect to the proper page.   | 1. Click on all navigation links in header/footer. <br>2. Click on various internal links (e.g., "View Recipe"). | All links navigate to the correct and intended pages without errors (e.g., 404s).                              | As expected   | Pass      |
 
 ### Testing on Different Browsers and Devices
 The website was tested and proved to be issue-free on the following browsers:
@@ -234,6 +250,8 @@ The website was tested and proved to be issue-free on the following browsers:
 <li>Recipes were visible in the blog even when their status was pending and they hadn't been approved by the admin. I added a status field to track approval, updated the approval logic, and updated views and templates to show only approved recipes.</li>
 <li>At the end of the project background image were not displayed correctly. i veryfied the correct path, ensured the image were in the correct directorie, and ran collectstatic command to gather static files.Cleared browsing data.</li>
 <li>Many bugs were resolved using Django's debug mode. This feature made it easy to identify the causes of errors and address them. For more complex issues, I could quickly find solutions by searching for the exact error messages.</li>
+<li>Categories were not being correctly saved or "pulled in" when creating or editing recipes.
+Fix: Identified missing form.save_m2m() calls after form.save(commit=False) in add_recipe and recipe_edit views. Added this line to both views, resolving the issue.</li>
 
 ## Cloning This Project
 To create a clone, follow these steps:<br>
@@ -285,6 +303,13 @@ CLOUDINARY_CLOUD_NAME<br>
 <li>After couple minutes it should show "Your app was successfully deployed"</li>
 <li>Open your newly created app</li>
 
+## Future Enhancements
+*   **Advanced Search Filters:** Allow users to filter recipes by category, cooking time, or user ratings.
+*   **User Profile Pages:** More detailed user profiles where users can showcase their submitted recipes, favorite recipes, and perhaps a short bio.
+*   **Social Sharing:** Integration to allow users to easily share recipes on social media platforms.
+*   **Nutritional Information:** Option for users to add approximate nutritional information for their recipes.
+*   **Image Galleries for Recipes:** Allow users to upload multiple images per recipe.
+*   **Print-Friendly Recipe View:** A dedicated view for recipes optimized for printing.
 
 ## Learning Resources
 
